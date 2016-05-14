@@ -1,0 +1,191 @@
+body{
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    font-family: Tahoma, Arial, "Comic Sans MS","Microsoft Yahei",sans-serif;
+}
+.container{
+    width: 60%;
+    float: left;
+}
+.right-bar{
+    width: 40%;
+    float: right;
+    padding-top: 50px;
+}
+.viewport{
+    perspective: 800px;
+}
+.stage{
+    height: 400px;
+    width: 400px;
+    margin: auto;
+    /*transform-origin: 50px 50px;*/
+    transform-style: preserve-3d;
+    transform: rotateX(-30deg) rotateY(-30deg);
+    /*background-color: #ddd;*/
+}
+.plane{
+    height: 400px;
+    width: 400px;
+    /*background-color: #ddd;*/
+    transform-style: preserve-3d;
+}
+
+.tile{
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    font-size: 30px;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 15px;
+    opacity: 1;
+    z-index: -1;
+    backface-visibility:hidden;
+}
+.tile span{
+    display: none;
+}
+/* contolls area */
+.controls{
+    line-height: 30px;
+}
+.description{
+    line-height: 25px;
+}
+
+/* TILE COLORS*/
+.down {
+    background-color: rgb(255,232,54);
+}
+
+.right {
+    background-color: rgb(255,56,56);
+}
+.left {
+    background-color: rgb(255,159,56);
+}
+.front {
+    background-color: rgb(16,122,9);
+}
+.back {
+    background-color: rgb(86,56,255);
+}
+.up {
+    background-color: rgb(143,143,143);
+}
+
+.ftl{
+    transform: translate3d(-50px, -50px, 100px) ;
+}
+.fbl{
+    transform: translate3d(-50px, 50px, 100px);
+}
+.ftr{
+    transform: translate3d(50px, -50px, 100px);
+}
+.fbr{
+    transform: translate3d(50px, 50px, 100px);
+}
+
+
+.btl{
+    transform: rotateY(-180deg) translate3d(-50px, -50px, 100px) ;
+}
+.bbl{
+    transform: rotateY(-180deg) translate3d(-50px, 50px, 100px);
+}
+.btr{
+    transform: rotateY(-180deg) translate3d(50px, -50px, 100px);
+}
+.bbr{
+    transform: rotateY(-180deg) translate3d(50px, 50px, 100px);
+}
+
+
+.ltl{
+    transform: rotateY(-90deg) translate3d(-50px, -50px, 100px) ;
+}
+.lbl{
+    transform: rotateY(-90deg) translate3d(-50px, 50px, 100px);
+}
+.ltr{
+    transform: rotateY(-90deg) translate3d(50px, -50px, 100px);
+}
+.lbr{
+    transform: rotateY(-90deg) translate3d(50px, 50px, 100px);
+}
+
+
+.rtl{
+    transform: rotateY(90deg) translate3d(-50px, -50px, 100px) ;
+}
+.rbl{
+    transform: rotateY(90deg) translate3d(-50px, 50px, 100px);
+}
+.rtr{
+    transform: rotateY(90deg) translate3d(50px, -50px, 100px);
+}
+.rbr{
+    transform: rotateY(90deg) translate3d(50px, 50px, 100px);
+}
+
+
+.utl{
+    transform: rotateX(90deg) translate3d(-50px, -50px, 100px) ;
+}
+.ubl{
+    transform: rotateX(90deg) translate3d(-50px, 50px, 100px);
+}
+.utr{
+    transform: rotateX(90deg) translate3d(50px, -50px, 100px);
+}
+.ubr{
+    transform: rotateX(90deg) translate3d(50px, 50px, 100px);
+}
+
+
+.dtl{
+    transform: rotateX(-90deg) translate3d(-50px, -50px, 100px) ;
+
+}
+.dbl{
+    transform: rotateX(-90deg) translate3d(-50px, 50px, 100px);
+}
+.dtr{
+    transform: rotateX(-90deg) translate3d(50px, -50px, 100px);
+}
+.dbr{
+    transform: rotateX(-90deg) translate3d(50px, 50px, 100px);
+}
+
+.rotate-xrc, .rotate-xlc{
+    transition: all .2s linear;
+    transform: rotateX(90deg);
+}
+.rotate-xra, .rotate-xla{
+    transition: all .2s linear;
+    transform: rotateX(-90deg);
+}
+.rotate-yuc, .rotate-ydc{
+    transition: all .2s linear;
+    transform: rotateY(90deg);
+}
+.rotate-yua, .rotate-yda{
+    transition: all .2s linear;
+    transform: rotateY(-90deg);
+}
+
+.rotate-zfc, .rotate-zbc{
+    transition: all .2s linear;
+    transform: rotateZ(90deg);
+}
+.rotate-zfa, .rotate-zba{
+    transition: all .2s linear;
+    transform: rotateZ(-90deg);
+}
+
