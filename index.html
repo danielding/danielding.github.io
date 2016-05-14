@@ -156,6 +156,68 @@
 
       <div class="body-wrap">
   
+    <article id="post-hexo-skip-render-html-code" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/15/hexo-skip-render-html-code/" class="article-date">
+  	<time datetime="2016-05-14T22:54:03.000Z" itemprop="datePublished">2016-05-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/15/hexo-skip-render-html-code/">hexo中，如何使前端静态demo代码不被渲染</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>开发中，经常写点静态代码demo用于演示，这种demo通常就1个html/css/js，直接在点开就能运行，不需要静态服务器啥的。<br>比如，以前写的一个<a href="http://danielding.github.io/cube/index.html">魔方小程序</a>，cube文件夹底下就4个文件：index.html cube.css cube.js zepto.js<br>可今天把这个cube文件夹放到source目录底下，<code>hexo g</code>之后，却变成了下图这个样子：被hexo的模板包裹了一层，而且脚本无法运行！！</p>
+
+<img src="/images/2016/1.png" alt="错误图片" style="width: 50%" class="img-shadow">
+
+<p>真是坑爹啊o(╯□╰)o，看了下，原因是hexo对index.html做了一次渲染，导致zepto.js加载有问题。<br>那怎么使hexo不处理source目录下某个子目录的所有文件，仅仅是将其copy到public目录中对应目录。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>网上找了一圈，最终在hexo github 的issue list里找到了答案，其实很简单，hexo本身提供了这个能力。<br>通过其skip_render参数即可实现，具体如下：<br>在_config.yml中，配置skip_render参数如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">skip_render: cube<span class="comment">/*</span></span><br></pre></td></tr></table></figure>
+<p>配置之后，<code>hexo -g</code> 便会不再渲染此文件夹的内容，只是简单的进行copy.</p>
+<h2 id="小感想"><a href="#小感想" class="headerlink" title="小感想"></a>小感想</h2><p>通过这个问题的求解，发现了git issue list这个重要的解题源。<br>学习是程序员的一项重要技能，明确自己常遇到问题的几个解决源，值得思考。</p>
+<p>参考链接：<a href="https://github.com/hexojs/hexo/issues/1146#issuecomment-88380140" target="_blank" rel="external">github issue</a></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

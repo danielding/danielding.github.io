@@ -4,36 +4,20 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>使用github pages + hexo建立独立博客 | front-end tech blog</title>
+  <title>hexo中，如何使前端静态demo代码不被渲染 | front-end tech blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="step 1：安装hexo及各种配置网上有大把教程，不赘述了，建议以官方教程为准。
-step 2：写文章1$ hexo new &quot;My New Post&quot;
-More info: Writing
-Run server1$ hexo server
-More info: Server
-Generate static files1$ hexo generate
-More info: Generating">
+  <meta name="description" content="问题开发中，经常写点静态代码demo用于演示，这种demo通常就1个html/css/js，直接在点开就能运行，不需要静态服务器啥的。比如，以前写的一个魔方小程序，cube文件夹底下就4个文件：index.html cube.css cube.js zepto.js可今天把这个cube文件夹放到source目录底下，hexo g之后，却变成了下图这个样子：被hexo的模板包裹了一层，而且脚本无法运">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用github pages + hexo建立独立博客">
-<meta property="og:url" content="http://danielding.github.io/2016/05/13/hello-hexo/index.html">
+<meta property="og:title" content="hexo中，如何使前端静态demo代码不被渲染">
+<meta property="og:url" content="http://danielding.github.io/2016/05/15/hexo-skip-render-html-code/index.html">
 <meta property="og:site_name" content="front-end tech blog">
-<meta property="og:description" content="step 1：安装hexo及各种配置网上有大把教程，不赘述了，建议以官方教程为准。
-step 2：写文章1$ hexo new &quot;My New Post&quot;
-More info: Writing
-Run server1$ hexo server
-More info: Server
-Generate static files1$ hexo generate
-More info: Generating">
-<meta property="og:updated_time" content="2016-05-12T16:22:31.000Z">
+<meta property="og:description" content="问题开发中，经常写点静态代码demo用于演示，这种demo通常就1个html/css/js，直接在点开就能运行，不需要静态服务器啥的。比如，以前写的一个魔方小程序，cube文件夹底下就4个文件：index.html cube.css cube.js zepto.js可今天把这个cube文件夹放到source目录底下，hexo g之后，却变成了下图这个样子：被hexo的模板包裹了一层，而且脚本无法运">
+<meta property="og:image" content="http://danielding.github.io/images/2016/1.png">
+<meta property="og:updated_time" content="2016-05-14T15:35:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用github pages + hexo建立独立博客">
-<meta name="twitter:description" content="step 1：安装hexo及各种配置网上有大把教程，不赘述了，建议以官方教程为准。
-step 2：写文章1$ hexo new &quot;My New Post&quot;
-More info: Writing
-Run server1$ hexo server
-More info: Server
-Generate static files1$ hexo generate
-More info: Generating">
+<meta name="twitter:title" content="hexo中，如何使前端静态demo代码不被渲染">
+<meta name="twitter:description" content="问题开发中，经常写点静态代码demo用于演示，这种demo通常就1个html/css/js，直接在点开就能运行，不需要静态服务器啥的。比如，以前写的一个魔方小程序，cube文件夹底下就4个文件：index.html cube.css cube.js zepto.js可今天把这个cube文件夹放到source目录底下，hexo g之后，却变成了下图这个样子：被hexo的模板包裹了一层，而且脚本无法运">
+<meta name="twitter:image" content="http://danielding.github.io/images/2016/1.png">
   
     <link rel="alternative" href="/atom.xml" title="front-end tech blog" type="application/atom+xml">
   
@@ -173,11 +157,11 @@ More info: Generating">
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-hexo-skip-render-html-code" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/13/hello-hexo/" class="article-date">
-  	<time datetime="2016-05-12T19:44:35.000Z" itemprop="datePublished">2016-05-12</time>
+      <a href="/2016/05/15/hexo-skip-render-html-code/" class="article-date">
+  	<time datetime="2016-05-14T22:54:03.000Z" itemprop="datePublished">2016-05-14</time>
 </a>
     </div>
   
@@ -190,7 +174,7 @@ More info: Generating">
         
   
     <h1 class="article-title" itemprop="name">
-      使用github pages + hexo建立独立博客
+      hexo中，如何使前端静态demo代码不被渲染
     </h1>
   
 
@@ -206,14 +190,17 @@ More info: Generating">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="step-1：安装hexo及各种配置"><a href="#step-1：安装hexo及各种配置" class="headerlink" title="step 1：安装hexo及各种配置"></a>step 1：安装hexo及各种配置</h2><p>网上有大把教程，不赘述了，建议以官方教程为准。</p>
-<h2 id="step-2：写文章"><a href="#step-2：写文章" class="headerlink" title="step 2：写文章"></a>step 2：写文章</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>开发中，经常写点静态代码demo用于演示，这种demo通常就1个html/css/js，直接在点开就能运行，不需要静态服务器啥的。<br>比如，以前写的一个<a href="http://danielding.github.io/cube/index.html">魔方小程序</a>，cube文件夹底下就4个文件：index.html cube.css cube.js zepto.js<br>可今天把这个cube文件夹放到source目录底下，<code>hexo g</code>之后，却变成了下图这个样子：被hexo的模板包裹了一层，而且脚本无法运行！！</p>
+
+<img src="/images/2016/1.png" alt="错误图片" style="width: 50%" class="img-shadow">
+
+<p>真是坑爹啊o(╯□╰)o，看了下，原因是hexo对index.html做了一次渲染，导致zepto.js加载有问题。<br>那怎么使hexo不处理source目录下某个子目录的所有文件，仅仅是将其copy到public目录中对应目录。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>网上找了一圈，最终在hexo github 的issue list里找到了答案，其实很简单，hexo本身提供了这个能力。<br>通过其skip_render参数即可实现，具体如下：<br>在_config.yml中，配置skip_render参数如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">skip_render: cube<span class="comment">/*</span></span><br></pre></td></tr></table></figure>
+<p>配置之后，<code>hexo -g</code> 便会不再渲染此文件夹的内容，只是简单的进行copy.</p>
+<h2 id="小感想"><a href="#小感想" class="headerlink" title="小感想"></a>小感想</h2><p>通过这个问题的求解，发现了git issue list这个重要的解题源。<br>学习是程序员的一项重要技能，明确自己常遇到问题的几个解决源，值得思考。</p>
+<p>参考链接：<a href="https://github.com/hexojs/hexo/issues/1146#issuecomment-88380140" target="_blank" rel="external">github issue</a></p>
+
       
     </div>
     
@@ -222,18 +209,9 @@ More info: Generating">
     
 <nav id="article-nav">
   
-    <a href="/2016/05/15/hexo-skip-render-html-code/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          hexo中，如何使前端静态demo代码不被渲染
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/05/12/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2016/05/13/hello-hexo/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用github pages + hexo建立独立博客</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -268,7 +246,7 @@ More info: Generating">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="hello-hexo" data-title="使用github pages + hexo建立独立博客" data-url="http://danielding.github.io/2016/05/13/hello-hexo/"></div>
+	<div class="ds-thread" data-thread-key="hexo-skip-render-html-code" data-title="hexo中，如何使前端静态demo代码不被渲染" data-url="http://danielding.github.io/2016/05/15/hexo-skip-render-html-code/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

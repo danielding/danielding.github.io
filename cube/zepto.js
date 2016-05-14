@@ -6,7 +6,7 @@ var Zepto = (function() {
     elementDisplay = {}, classCache = {},
     cssNumber = { 'column-count': 1, 'columns': 1, 'font-weight': 1, 'line-height': 1,'opacity': 1, 'z-index': 1, 'zoom': 1 },
     fragmentRE = /^\s*<(\w+|!)[^>]*>/,
-    singleTagRE = /^<(\w+)\s*\ ?="">(?:<\ \1="">|)$/,
+    singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
     tagExpanderRE = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
     rootNodeRE = /^(?:body|html)$/i,
     capitalRE = /([A-Z])/g,
@@ -126,7 +126,7 @@ var Zepto = (function() {
     if (singleTagRE.test(html)) dom = $(document.createElement(RegExp.$1))
 
     if (!dom) {
-      if (html.replace) html = html.replace(tagExpanderRE, "<$1>")
+      if (html.replace) html = html.replace(tagExpanderRE, "<$1></$2>")
       if (name === undefined) name = fragmentRE.test(html) && RegExp.$1
       if (!(name in containers)) name = '*'
 
@@ -179,7 +179,121 @@ var Zepto = (function() {
       // If it's a html fragment, create nodes from it
       // Note: In both Chrome 21 and Firefox 15, DOM error 12
       // is thrown if the fragment doesn't begin with <
-      if (selector[0] == '<' 1="" &&="" fragmentre.test(selector))="" dom="zepto.fragment(selector," regexp.$1,="" context),="" selector="null" if="" there's="" a="" context,="" create="" collection="" on="" that="" context="" first,="" and="" select="" nodes="" from="" there="" else="" (context="" !="=" undefined)="" return="" $(context).find(selector)="" it's="" css="" selector,="" use="" it="" to="" nodes.="" selector)="" }="" function="" is="" given,="" call="" when="" the="" ready="" (isfunction(selector))="" $(document).ready(selector)="" zepto="" just="" (zepto.isz(selector))="" {="" normalize="" array="" an="" of="" given="" (isarray(selector))="" wrap="" (isobject(selector))="" html="" fragment,="" (fragmentre.test(selector))="" last="" but="" no="" least,="" new="" found="" zepto.z(dom,="" `$`="" will="" be="" base="" `zepto`="" object.="" calling="" this="" `$.zepto.init,="" which="" makes="" implementation="" details="" selecting="" creating="" collections="" patchable="" in="" plugins.="" $="function(selector," context){="" zepto.init(selector,="" context)="" extend(target,="" source,="" deep)="" for="" (key="" source)="" (deep="" (isplainobject(source[key])="" ||="" isarray(source[key])))="" !isplainobject(target[key]))="" target[key]="{}" (isarray(source[key])="" !isarray(target[key]))="" extend(target[key],="" source[key],="" (source[key]="" copy="" all="" undefined="" properties="" one="" or="" more="" objects="" `target`="" $.extend="function(target){" var="" deep,="" args="slice.call(arguments," 1)="" (typeof="" target="=" 'boolean')="" deep="target" args.foreach(function(arg){="" arg,="" })="" `$.zepto.qsa`="" zepto's="" uses="" `document.queryselectorall`="" optimizes="" some="" special="" cases,="" like="" `#id`.="" method="" can="" overriden="" zepto.qsa="function(element," selector){="" found,="" maybeid="selector[0]" =="#" ,="" maybeclass="!maybeID" selector[0]="=" '.',="" nameonly="maybeID" ?="" selector.slice(1)="" :="" ensure="" char="" tag="" name="" still="" gets="" checked issimple="simpleSelectorRE.test(nameOnly)" (isdocument(element)="" maybeid)="" (="" (found="element.getElementById(nameOnly))" [found]="" []="" )="" (element.nodetype="" element.nodetype="" 9)="" slice.call(="" !maybeid="" element.getelementsbyclassname(nameonly)="" simple,="" could="" class="" element.getelementsbytagname(selector)="" element.queryselectorall(selector)="" not="" we="" need="" query="" filtered(nodes,="" null="" $(nodes)="" $(nodes).filter(selector)="" $.contains="document.documentElement.contains" function(parent,="" node)="" parent="" node="" parent.contains(node)="" while="" (node="" parent)="" true="" false="" funcarg(context,="" idx,="" payload)="" isfunction(arg)="" arg.call(context,="" arg="" setattribute(node,="" name,="" value)="" value="=" node.removeattribute(name)="" node.setattribute(name,="" access="" classname="" property="" respecting="" svganimatedstring="" classname(node,="" value){="" klass="node.className" '',="" svg="klass" klass.baseval="" (value="==" (klass.baseval="value)" (node.classname="value)" "true"=""> true
+      if (selector[0] == '<' && fragmentRE.test(selector))
+        dom = zepto.fragment(selector, RegExp.$1, context), selector = null
+      // If there's a context, create a collection on that context first, and select
+      // nodes from there
+      else if (context !== undefined) return $(context).find(selector)
+      // If it's a CSS selector, use it to select nodes.
+      else dom = zepto.qsa(document, selector)
+    }
+    // If a function is given, call it when the DOM is ready
+    else if (isFunction(selector)) return $(document).ready(selector)
+    // If a Zepto collection is given, just return it
+    else if (zepto.isZ(selector)) return selector
+    else {
+      // normalize array if an array of nodes is given
+      if (isArray(selector)) dom = compact(selector)
+      // Wrap DOM nodes.
+      else if (isObject(selector))
+        dom = [selector], selector = null
+      // If it's a html fragment, create nodes from it
+      else if (fragmentRE.test(selector))
+        dom = zepto.fragment(selector.trim(), RegExp.$1, context), selector = null
+      // If there's a context, create a collection on that context first, and select
+      // nodes from there
+      else if (context !== undefined) return $(context).find(selector)
+      // And last but no least, if it's a CSS selector, use it to select nodes.
+      else dom = zepto.qsa(document, selector)
+    }
+    // create a new Zepto collection from the nodes found
+    return zepto.Z(dom, selector)
+  }
+
+  // `$` will be the base `Zepto` object. When calling this
+  // function just call `$.zepto.init, which makes the implementation
+  // details of selecting nodes and creating Zepto collections
+  // patchable in plugins.
+  $ = function(selector, context){
+    return zepto.init(selector, context)
+  }
+
+  function extend(target, source, deep) {
+    for (key in source)
+      if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
+        if (isPlainObject(source[key]) && !isPlainObject(target[key]))
+          target[key] = {}
+        if (isArray(source[key]) && !isArray(target[key]))
+          target[key] = []
+        extend(target[key], source[key], deep)
+      }
+      else if (source[key] !== undefined) target[key] = source[key]
+  }
+
+  // Copy all but undefined properties from one or more
+  // objects to the `target` object.
+  $.extend = function(target){
+    var deep, args = slice.call(arguments, 1)
+    if (typeof target == 'boolean') {
+      deep = target
+      target = args.shift()
+    }
+    args.forEach(function(arg){ extend(target, arg, deep) })
+    return target
+  }
+
+  // `$.zepto.qsa` is Zepto's CSS selector implementation which
+  // uses `document.querySelectorAll` and optimizes for some special cases, like `#id`.
+  // This method can be overriden in plugins.
+  zepto.qsa = function(element, selector){
+    var found,
+        maybeID = selector[0] == '#',
+        maybeClass = !maybeID && selector[0] == '.',
+        nameOnly = maybeID || maybeClass ? selector.slice(1) : selector, // Ensure that a 1 char tag name still gets checked
+        isSimple = simpleSelectorRE.test(nameOnly)
+    return (isDocument(element) && isSimple && maybeID) ?
+      ( (found = element.getElementById(nameOnly)) ? [found] : [] ) :
+      (element.nodeType !== 1 && element.nodeType !== 9) ? [] :
+      slice.call(
+        isSimple && !maybeID ?
+          maybeClass ? element.getElementsByClassName(nameOnly) : // If it's simple, it could be a class
+          element.getElementsByTagName(selector) : // Or a tag
+          element.querySelectorAll(selector) // Or it's not simple, and we need to query all
+      )
+  }
+
+  function filtered(nodes, selector) {
+    return selector == null ? $(nodes) : $(nodes).filter(selector)
+  }
+
+  $.contains = document.documentElement.contains ?
+    function(parent, node) {
+      return parent !== node && parent.contains(node)
+    } :
+    function(parent, node) {
+      while (node && (node = node.parentNode))
+        if (node === parent) return true
+      return false
+    }
+
+  function funcArg(context, arg, idx, payload) {
+    return isFunction(arg) ? arg.call(context, idx, payload) : arg
+  }
+
+  function setAttribute(node, name, value) {
+    value == null ? node.removeAttribute(name) : node.setAttribute(name, value)
+  }
+
+  // access className property while respecting SVGAnimatedString
+  function className(node, value){
+    var klass = node.className || '',
+        svg   = klass && klass.baseVal !== undefined
+
+    if (value === undefined) return svg ? klass.baseVal : klass
+    svg ? (klass.baseVal = value) : (node.className = value)
+  }
+
+  // "true"  => true
   // "false" => false
   // "null"  => null
   // "42"    => 42
@@ -1045,7 +1159,7 @@ window.$ === undefined && (window.$ = Zepto)
       document = window.document,
       key,
       name,
-      rscript = /<script\b[^<]*(?:(?!<\ script="">)<[^<]*)*<\ script="">/gi,
+      rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
       scriptTypeRE = /^(?:text|application)\/javascript/i,
       xmlTypeRE = /^(?:text|application)\/xml/i,
       jsonType = 'application/json',
@@ -1438,4 +1552,36 @@ window.$ === undefined && (window.$ = Zepto)
 })(Zepto)
 
 ;(function($){
-  // __proto__ doesn't exist on IE</div></[^<]*)*<\></script\b[^<]*(?:(?!<\></'></$1></(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^></\></(\w+)\s*\></(\w+|!)[^>
+  // __proto__ doesn't exist on IE<11, so redefine
+  // the Z function to use object extension instead
+  if (!('__proto__' in {})) {
+    $.extend($.zepto, {
+      Z: function(dom, selector){
+        dom = dom || []
+        $.extend(dom, $.fn)
+        dom.selector = selector || ''
+        dom.__Z = true
+        return dom
+      },
+      // this is a kludge but works
+      isZ: function(object){
+        return $.type(object) === 'array' && '__Z' in object
+      }
+    })
+  }
+
+  // getComputedStyle shouldn't freak out when called
+  // without a valid element as argument
+  try {
+    getComputedStyle(undefined)
+  } catch(e) {
+    var nativeGetComputedStyle = getComputedStyle;
+    window.getComputedStyle = function(element){
+      try {
+        return nativeGetComputedStyle(element)
+      } catch(e) {
+        return null
+      }
+    }
+  }
+})(Zepto)
