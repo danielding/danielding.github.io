@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="front-end tech blog">
 <meta property="og:description" content="问题开发中，经常写点静态代码demo用于演示，这种demo通常就1个html/css/js，直接在点开就能运行，不需要静态服务器啥的。比如，以前写的一个魔方小程序，cube文件夹底下就4个文件：index.html cube.css cube.js zepto.js可今天把这个cube文件夹放到source目录底下，hexo g之后，却变成了下图这个样子：被hexo的模板包裹了一层，而且脚本无法运">
 <meta property="og:image" content="http://danielding.github.io/images/2016/1.png">
-<meta property="og:updated_time" content="2016-05-14T15:35:48.000Z">
+<meta property="og:updated_time" content="2016-05-14T15:37:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo中，如何使前端静态demo代码不被渲染">
 <meta name="twitter:description" content="问题开发中，经常写点静态代码demo用于演示，这种demo通常就1个html/css/js，直接在点开就能运行，不需要静态服务器啥的。比如，以前写的一个魔方小程序，cube文件夹底下就4个文件：index.html cube.css cube.js zepto.js可今天把这个cube文件夹放到source目录底下，hexo g之后，却变成了下图这个样子：被hexo的模板包裹了一层，而且脚本无法运">
@@ -194,8 +194,8 @@
 
 <img src="/images/2016/1.png" alt="错误图片" style="width: 50%" class="img-shadow">
 
-<p>真是坑爹啊o(╯□╰)o，看了下，原因是hexo对index.html做了一次渲染，导致zepto.js加载有问题。<br>那怎么使hexo不处理source目录下某个子目录的所有文件，仅仅是将其copy到public目录中对应目录。</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>网上找了一圈，最终在hexo github 的issue list里找到了答案，其实很简单，hexo本身提供了这个能力。<br>通过其skip_render参数即可实现，具体如下：<br>在_config.yml中，配置skip_render参数如下：</p>
+<p>真是坑爹啊o(╯□╰)o，看了下，原因是hexo对index.html做了一次渲染，导致zepto.js加载有问题。<br>那怎么使hexo不处理source目录下某个子目录的所有文件，仅仅是将其copy到public目录中对应目录呢？</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>网上找了一圈，最终在hexo github 的issue list里找到了答案，其实很简单，hexo本身提供了这个能力。<br>通过其skip_render参数即可实现，具体如下：<br>在根目录的_config.yml中，配置skip_render参数如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">skip_render: cube<span class="comment">/*</span></span><br></pre></td></tr></table></figure>
 <p>配置之后，<code>hexo -g</code> 便会不再渲染此文件夹的内容，只是简单的进行copy.</p>
 <h2 id="小感想"><a href="#小感想" class="headerlink" title="小感想"></a>小感想</h2><p>通过这个问题的求解，发现了git issue list这个重要的解题源。<br>学习是程序员的一项重要技能，明确自己常遇到问题的几个解决源，值得思考。</p>
